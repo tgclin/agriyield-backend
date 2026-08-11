@@ -1,11 +1,11 @@
-# Stage 1: Build the Java JAR file using Maven
-FROM maven:3.9-eclipse-temurin-17 AS build
+# Stage 1: Build the Java JAR file using Maven with JDK 21
+FROM maven:3.9-eclipse-temurin-21 AS build
 WORKDIR /app
 COPY . .
 RUN mvn clean package -DskipTests
 
-# Stage 2: Run the built JAR file
-FROM eclipse-temurin:17-jdk-alpine
+# Stage 2: Run the built JAR file using JDK 21
+FROM eclipse-temurin:21-jdk-alpine
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
